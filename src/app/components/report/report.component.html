@@ -1,0 +1,232 @@
+<md-sidenav-container >
+<div class="box">
+  <md-toolbar  class="toolbar">
+    <div class="toolbar-flex" >
+      <button md-fab color="accent" mdTooltip="Navigate back to see this location on map" mdTooltipPosition="after" (click)="navigateToLocationOnMap([reportData['lng'], reportData['lat']])">
+        <md-icon>arrow_back</md-icon>
+      </button>
+    </div>
+
+    <div class="toolbar-logo-box" (click)="navigateBack()" mdTooltip="Go to main page" style="cursor: pointer;">
+      <span class="toolbar-logo-text">S<span class="small">treet</span>C<span class="small">hecker</span></span>
+    </div>
+    <div class="toolbar-user-box"  (click)="getSelf()" (click)="rightSidenav.open()"   *ngIf="user != undefined">
+      <img [src]="user['profile_images'][0]['full_url']"  alt="" class="toolbar-icon-user">
+      {{user['username']}}
+    </div>
+
+  </md-toolbar>
+  <div class="outer-box">
+    <!--      LOCATION AND RESPONSES      -->
+    <div class="report-box">
+      <!--      LOCATION      -->
+      <div class="report-box-item">
+        <div class="solved" *ngIf="reportData['active'] == 0" mdTooltip="This problem is solved" ><md-icon>done_all</md-icon></div>
+        <div class="report-box-item-image-box">
+          <div class="no-images" *ngIf="reportData['reportImages'] != undefined  && reportData['reportImages'].length == 0">No images for this location</div>
+          <div class="image-box-large" *ngIf="reportData['reportImages'] != undefined  && reportData['reportImages'].length != 0" >
+            <img [src]="locationImages.cover" alt="" (click)="openGalery('location',pic )" #pic>
+          </div>
+          <div class="image-box-small" *ngIf="reportData['reportImages'] != undefined  && reportData['reportImages'].length != 0">
+            <div *ngFor="let img of reportData['reportImages']">
+              <div class="small" >
+                <img [src]="img['full_url']" alt="" (click)="setCoverImage(pic1)" #pic1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="report-box-item-text-box" *ngIf="reportData != undefined">
+          <div class="text-box-row-1">
+            <span class="text-box-location">{{reportData['title']}}</span>
+
+          </div>
+          <div class="text-box-row-2">
+            <md-chip-list>
+              <md-chip color="primary" selected="true" *ngIf="reportData['owner']" mdTooltip="Owner of location">{{reportData['owner']['username']}}</md-chip>
+              <md-chip color="accent" selected="true"  mdTooltip="Average location grade">&#9733; {{reportData['avgGrade']}}</md-chip>
+
+              <md-chip color="accent" selected="true" mdTooltip="Location category level">&#33; {{reportData['level']}}</md-chip>
+              <md-chip color="accent" selected="true" mdTooltip="Location category" *ngIf="reportData['category'] != undefined">{{reportData['category']['title']}}</md-chip>
+            </md-chip-list>
+
+
+            <!--<span class="text-box-comments">show comments</span>-->
+            <button md-fab class="text-box-comment-button reopen" mdTooltip="Reopen this location" (click)="onReopen(reportData['id'])" *ngIf="reportData['active'] == 0 && user && (user['admin'] == true || reportData['owner'] && user['username'] == reportData['owner']['username'])"><md-icon>loop</md-icon></button>
+            <button md-fab class="text-box-comment-button add-coment" mdTooltip="Rate this location" (click)="openRate()" *ngIf="reportData['myGrade'] == null && user" ><md-icon>grade</md-icon></button>
+            <button md-fab class="text-box-comment-button add-coment" style="cursor: default; font-size: 1.2em" mdTooltip="Your grade for this location"  *ngIf="reportData['myGrade'] != null">{{reportData['myGrade']}}</button>
+            <button md-fab class="text-box-comment-button send-response" mdTooltip="Send us your suggestion" (click)="openResolveDialog(reportData['id'])" *ngIf=" user != undefined && reportData['responses'] != undefined && reportData['responses'].length < 3"><md-icon>feedback</md-icon></button>
+            <button md-fab class="text-box-comment-button location-delete" mdTooltip="Delete this location" (click)="onDeleteLocation(reportData['id'], 'location')" color="warn" *ngIf=" user && user['admin'] == true || user && reportData['owner'] && user['username'] == reportData['owner']['username']" ><md-icon>delete</md-icon></button>
+
+
+          </div>
+
+          <div class="text-box-row-3">
+          <span style="font-style: italic; color: #aaa; align-self:flex-end; font-size: .85em" mdTooltip="Location creation time">{{reportData['created_at']}}</span>
+          <hr style="margin: 5px 0; border-top: 0; border-left: 0; border-right: 0; border-color: #f3552e">
+          {{reportData['description']}}</div>
+
+        </div>
+      </div>
+      <!--      RESPONSES     -->
+      <div class="resolve-box" *ngIf="reportData['responses']">
+        <div class="title">responses</div>
+        <div class="no-responses" *ngIf="reportData['responses'].length == 0">There are no responses for this point</div>
+        <div class="card-box">
+          <div class="resolve-card-box" *ngFor="let card of reportData['responses']">
+            <div class="resolve-card-galery">
+              <img [src]="card['report_images'][0]['full_url']" *ngIf="card['report_images'].length != 0" alt="" class="cover-img">
+              <img src="../../../assets/images/no-image.png" *ngIf="card['report_images'].length == 0" alt="" class="cover-img">
+              <div class="galery" (click)="openGalery('response', card.id)" *ngIf="card['report_images'].length != 0" mdTooltip="Show all images">galery</div>
+              <button md-mini-fab color="warn" mdTooltip="Delete response" class="delete-response" (click)="onDeleteLocation(card['id'], 'response')" *ngIf=" user != null && user['admin'] == true" ><md-icon>delete</md-icon></button>
+              <button md-mini-fab
+                color="accent"
+                class="resolve"
+                (click)="resolveResponse(card['id'])"
+                *ngIf="reportData['active'] == 1 &&  user && (user['admin'] == true || reportData['owner']['id'] == user['id'])"
+                mdTooltipPosition="above"
+                mdTooltip="Approve this solution"><md-icon>done</md-icon></button>
+              <div class="solution" *ngIf="checkSolution(card.id)">choosen solution</div>
+            </div>
+            <div class="resolve-card-content">
+              <div class="title">{{card.title.slice(0, 20)}}</div>
+              <div class="description">{{card.description.slice(0, 180)}}</div>
+              <div class="like-box">
+                <div class="likes">
+                  like <div>{{getNumberOfikes(card.impressions)}}</div>
+                </div>
+                <div class="likes">dislike <div>{{getNumberOfDislikes(card.impressions)}}</div></div>
+              </div>
+              <button md-mini-fab
+                      [disabled]="checkUserLike(card) == 2"
+                      *ngIf="reportData['active'] == 1 &&  user && card.owner.username != user['username']"
+                      color="accent"
+                      class="buttons done"
+                      mdTooltipPosition="above"
+                      mdTooltip="Like" (click)="likeResponse(card.id, card.impressions)"><md-icon>thumb_up</md-icon></button>
+              <button md-mini-fab
+                      [disabled]="checkUserLike(card) == 1"
+                      *ngIf="reportData['active'] == 1 && user && card.owner.username != user['username']"
+                      color="accent"
+                      class="buttons like"
+                      mdTooltipPosition="above"
+                      mdTooltip="Dislike" (click)="dislikeResponse(card.id, card.impressions)"><md-icon>thumb_down</md-icon></button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!--      COMMENTS      -->
+    <div class="comments" >
+      <div class="title">comments</div>
+      <md-spinner *ngIf="loadingFlag" color="accent" style="margin: auto"></md-spinner>
+      <div class="comment-box-outer"  *ngIf="!loadingFlag">
+        <div class="comment-box-inner" *ngFor="let comment of reportData['comments']">
+
+          <div class="comment-avatar" >
+            <img [src]="comment['owner']['profile_images'][0]['full_url']" alt="" class="avatar">
+            <!-- <img src="../../../assets/images/no-image.png" alt="" class="avatar"> -->
+            <button color="primary"
+                    mdTooltip="Edit comment"
+                    md-mini-fab class="edit-btn edit"
+                    (click)="editComment(comment['id'], comment['text'], comment['comment_images'])"
+                    *ngIf="user && user['username'] == comment['owner']['username'] || user && user['admin'] == true"><md-icon>edit</md-icon>
+            </button>
+            <button color="warn"
+                    mdTooltip="Delete comment"
+                    md-mini-fab class="edit-btn delete"
+                    (click)="deleteComment(comment['id'])"
+                    *ngIf="user && user['username'] == comment['owner']['username'] || user && user['admin'] == true"><md-icon>delete</md-icon>
+            </button>
+          </div>
+          <div class="comment-text-box">
+            <div class="comment-text">
+              {{comment.text.slice(0, 200)}}
+            </div>
+            <div class="comment-chip">
+              <div [mdTooltip]="commentGaleryValidation.tooltip(comment.id)">
+                <button md-mini-fab
+                        color="primary"
+                        [ngClass]="commentGaleryValidation.class(comment.id)"
+                        [disabled]="commentGaleryValidation.disabled(comment.id)"
+                        (click)="openGalery('comment', comment.id )"
+                ><md-icon>photo_library</md-icon>
+                </button>
+              </div>
+              <md-chip-list>
+                <md-chip color="accent" selected="true">{{comment['owner']['username']}}</md-chip>
+                <md-chip color="accent" selected="true">{{comment['creation_time']}}</md-chip>
+              </md-chip-list>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--      ADD COMMENT     -->
+      <button md-fab color="accent"
+              (click)="openComment()"
+              mdTooltip="Add comment"
+              *ngIf="!loadingFlag && user"
+              class="comment-add-button"><md-icon>comment</md-icon></button>
+    </div>
+  </div>
+  <div class="modal-box" *ngIf="zoomImageObject.zoom" >
+    <div class="modal-box-icon left" >
+      <md-icon class="icon" (click)="changeImage('back')">chevron_left</md-icon>
+    </div>
+    <div class="modal-box-img" (click)="openGalery()">
+      <span class="x" (click)="openGalery()">&#10006;</span>
+      <img [src]="zoomImageObject.current" alt="" class="img" >
+    </div>
+    <div class="modal-box-icon right">
+      <md-icon class="icon" (click)="changeImage('next')">chevron_right</md-icon>
+    </div>
+  </div>
+</div>
+  <md-sidenav #rightSidenav class="user-sidebar" align="end" >
+    <div class="user-sidebar-header">
+      <div class="user-name" *ngIf="user != undefined">{{user['username']}} <span>{{user['email']}}</span></div>
+    </div>
+    <div class="user-content-box" *ngIf="user != undefined">
+      <div class="user-comments">
+        <div class="user-static">
+          <md-icon class="icon">comment</md-icon>
+          <span>Comments</span>
+        </div>
+        <div class="user-dynamic">{{user['comments']}}</div>
+      </div>
+      <div class="user-reports">
+        <div class="user-static">
+          <md-icon class="icon">report_problem</md-icon>
+          <span>Responses</span>
+        </div>
+        <div class="user-dynamic">{{user['responses']}}</div>
+      </div>
+      <div class="user-locations">
+        <div class="user-static">
+          <md-icon class="icon">location_on</md-icon>
+          <span>Reports</span>
+        </div>
+        <div class="user-dynamic">{{user['reports']}}</div>
+      </div>
+      <div class="user-sidebar-change-username" #usernameChange>
+        <md-input-container>
+          <input mdInput placeholder="Enter new username" #username>
+        </md-input-container>
+        <md-icon class="send-icon" (click)="user_methods.update_username(username.value)" mdTooltip="send us new username" mdTooltipPosition="before">send</md-icon>
+      </div>
+      <div class="user-sidebar-change-username" #emailChange>
+        <md-input-container>
+          <input mdInput placeholder="Enter new Email" #email>
+        </md-input-container>
+        <md-icon class="send-icon" (click)="user_methods.update_email(email.value)" mdTooltip="send us new email" mdTooltipPosition="before">send</md-icon>
+      </div>
+
+
+      <button md-raised-button class="user-sidebar-button " (click)="user_methods.show_username()">Change username</button>
+      <button md-raised-button class="user-sidebar-button " (click)="user_methods.show_email()">Change email</button>
+      <button md-raised-button class="user-sidebar-button orange" (click)="user_methods.logout()">Logout</button>
+    </div>
+
+  </md-sidenav>
+
+</md-sidenav-container>

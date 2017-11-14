@@ -1,0 +1,118 @@
+
+
+
+.user-sidebar
+  width: 300px
+  display: flex
+  flex-direction: column
+
+  .user-sidebar-header
+    position: relative
+    display: flex
+    flex-direction: column
+    align-items: center
+    background-color: #01579B
+    border-bottom: 4px solid #f44336
+    box-shadow: 0 0 15px #f44336
+    color: #fff
+
+    .user-sidebar-change-image
+      width: 55px
+      height: 55px
+      border-radius: 55px
+      color: #fff
+      background-color: #f44336
+      position: absolute
+      bottom: -27px
+      left: 10px
+      display: flex
+      &:hover
+        cursor: pointer
+      .icon
+        margin: auto
+
+    .user-icon
+      width: 120px
+      height: 120px
+      border-radius: 120px
+      //font-size: 6em
+      text-align: center
+      margin-top: 10px
+      color: #fff
+
+    .user-name
+      margin: 10px 0
+      display: flex
+      flex-direction: column
+      align-items: center
+      font-size: 2em
+      span
+        color: #ddd
+        font-size: 1rem
+
+
+  .user-content-box
+    width: 300px
+    margin: 20px auto
+    display: flex
+    flex-direction: column
+
+    .user-comments
+      margin: 15px
+      font-size: 1.2em
+      display: flex
+      justify-content: space-between
+
+      .user-static
+        display: flex
+        justify-content: flex-start
+        align-items: center
+        width: 130px
+
+        .icon
+          font-size: 1.6em
+          color: #aaa
+
+        span
+          margin-left: 20px
+
+      .user-dynamic
+        width: 70px
+        height: 30px
+        border-radius: 35px
+        background-color: #f44336
+        color: #fff
+        text-align: center
+        line-height: 30px
+
+    .user-reports
+      @extend .user-comments
+
+    .user-locations
+      @extend .user-comments
+
+
+    .user-sidebar-change-username
+      display: none
+      margin:
+        top: 20px
+        left: 30px
+        right: 30px
+      align-items: center
+      justify-content: space-between
+      .send-icon
+        cursor: pointer
+        &:hover
+          color: #f44336
+
+    .user-sidebar-button
+      margin: 5px 20px
+      background-color: #01579B
+      color: #fff
+    .user-sidebar-button:first-of-type
+      margin-top: 30px
+
+    .orange
+      background-color: #f44336
+      color: #fff
+

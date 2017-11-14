@@ -1,0 +1,285 @@
+@import "../../../../node_modules/include-media/dist/include-media"
+
+.map-container
+  width: 100%
+  height: 100vh
+  display: flex
+  flex-grow: 1
+  z-index: 200
+
+
+  // MODAL-LIKE OVERLAY
+
+  .faded-box
+    width: 100%
+    height: 100vh
+    background: rgba(0, 0, 0, .8)
+    position: absolute
+    z-index: 10
+    display: flex
+    +media('<=850px')
+      flex-direction: column
+
+    // WELCOME TEXT BOX
+
+    .welcome-box
+      z-index: 11
+      color: #fff
+      flex-grow: 1
+      display: flex
+      flex-direction: column
+      justify-content: center
+      padding-left: 50px
+      +media('<=1366px')
+        padding-left: 10px
+      +media('<=850px')
+        justify-content: flex-start
+        padding-top: 20px
+        flex-grow: 0
+
+      .welcome-text-white
+        font-size: 6em
+        text-shadow: 0 0 7px rgba(255,165,0, 0.3)
+        +media('<=1680px')
+          font-size: 5em
+        +media('<=1366px')
+          font-size: 3.2em
+        +media('<=490px')
+          font-size: 2em
+
+      .welcome-text-orange
+        font-size: 8em
+        justify-content: flex-start
+        display: none
+        color: orange
+        animation-name: divein
+        animation-duration: 4s
+        width: 850px
+        text-shadow: 0 0 2px rgba(255, 255, 255, 0.5)
+        +media('<=1680px')
+          font-size: 6em
+          width: 630px
+        +media('<=1366px')
+          font-size: 4.2em
+          width: 450px
+        +media('<=490px')
+          font-size: 2.5em
+          width: 280px
+
+        &:after
+          content: ''
+          display: flex
+          height: 1px
+          background: white
+          animation-name: easing
+          animation-duration: 2.4s
+          animation-timing-function: ease
+
+
+    .login-box
+      flex-grow: 1
+      display: flex
+      +media('<=850px')
+        margin-top: 40px
+
+      .login-inner-box
+        position: relative
+        width: 600px
+        height: 800px
+        background: url('../../../assets/images/pin_large.png') no-repeat
+        margin: auto
+        left: 0
+        right: 0
+        bottom: 0
+        top: 0
+        z-index: 11
+        display: none
+        transition: all 1s
+        animation-name: showLogin
+        animation-duration: 2s
+        +media('<=1366px')
+          background: url('../../../assets/images/pin_medium.png') no-repeat
+          width: 510px
+          height: 750px
+        +media('<=956px')
+          background: url('../../../assets/images/pin_small.png') no-repeat
+          width: 290px
+          height: 405px
+        +media('<=850px')
+          margin: 0 auto
+
+      .register-button
+        position: absolute
+        z-index: 22
+        top: 125px
+        left: 75px
+        width: 60px
+        height: 60px
+        border-radius: 60px
+        background-color: #ff5722
+        display: flex
+        cursor: pointer
+        +media('<=1366px')
+          top: 345px
+          left: 55px
+        +media('<=956px')
+          top: 200px
+          left: 30px
+          width: 40px
+          height: 40px
+          border-radius: 40px
+
+      .login-input-box
+        width: 350px
+        height: 450px
+        position: relative
+        z-index: 11
+        margin: 150px auto
+        display: flex
+        align-items: center
+        flex-direction: column
+        color: white
+        font-size: 1.3em
+
+
+        +media('<=1366px')
+          margin: 100px auto
+          font-size: 1.2em
+          width: 320px
+          height: 350px
+        +media('<=956px')
+          margin: 40px auto
+          font-size: 1em
+          width: auto
+          height: 300px
+
+        input:-webkit-autofill
+              -webkit-animation-name: autofill
+              -webkit-animation-fill-mode: both
+
+        .inpt
+          margin-top: 10px
+          +media('<=956px')
+            width: 120px
+        .login-text
+          text-align: center
+          img
+            width: 150px
+            height: 150px
+            border-radius: 150px
+            +media('<=1366px')
+              width: 80px
+              height: 80px
+              border-radius: 80px
+            +media('<=956px')
+              width: 50px
+              height: 50px
+              border-radius: 50px
+
+
+      .register-input-box
+        @extend .login-input-box
+        margin: 70px auto
+        font-size: 1.2em
+        height: 450px
+        +media('<=1366px')
+          font-size: .9em
+          margin: 60px auto
+        +media('<=956px')
+          margin: 40px auto
+          font-size: .7em
+          width: 280px
+          height: 300px
+
+        .inpt-register
+          +media('<=956px')
+            width: 130px
+
+        .inputfile
+          width: 0.1px
+          height: 0.1px
+          opacity: 0
+          overflow: hidden
+          //position: absolute
+          z-index: -1
+        .inputfile + label
+          position: absolute
+          top: 51px
+          left: -45px
+          display: flex
+          text-align: center
+          align-items: center
+          justify-content: center
+          font-size: 1em
+          height: 40px
+          border-radius: 55px
+          width: 55px
+          height: 55px
+          color: #fff
+          background-color: #FF5722
+          //background-color: #FF5722
+          //justify-content: center
+          +media('<=956px')
+            top: -4px
+            left: 40px
+            width: 40px
+            height: 40px
+            border-radius: 40px
+          &:hover
+            cursor: pointer
+            font-weight: bold
+
+
+
+      .login-btn
+        width: 150px
+        margin:
+          top: 10px
+          left: auto
+          right: auto
+        +media('<=956px')
+          margin: 0 auto
+          width: 100px
+          height: 30px
+          line-height: 30px
+
+      .login-continue-text
+        margin:
+          top: 10px
+          left: auto
+          right: auto
+        font-size: 1rem
+        +media('<=956px')
+          margin: 0 auto
+          font-size: .7rem
+          width: 90px
+
+        &:hover
+          cursor: pointer
+          //color: #ff5722
+          border-bottom: 1px solid #ff5722
+
+@keyframes  divein
+  from
+    opacity: 0
+  to
+    opacity: 1
+
+@keyframes easing
+  from
+    opacity: 0
+    width: 10%
+  to
+    opacity: 1
+    width: 100%
+
+@keyframes showLogin
+  from
+    opacity: 0
+  to
+    opacity: 1
+
+@-webkit-keyframes autofill
+  to
+        color: #fff
+        background: transparent

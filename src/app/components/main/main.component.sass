@@ -1,0 +1,544 @@
+@import "../../../../node_modules/include-media/dist/include-media"
+
+
+
+.outer-wrap
+  // width: 100%
+  height: 100vh
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  // overflow: hidden
+  //  TOOLBAR
+  .toolbar
+    display: flex
+    background-color: #01579B
+    min-height: 80px
+    padding: 10px 30px
+    border-bottom: 4px solid #FF5722
+    box-shadow: 0 0 15px #FF5722
+    z-index: 200
+    +media("<500px")
+      padding: 10px
+
+    .toolbar-map-settings
+      display: flex
+      flex-grow: 1
+      align-items: center
+      font-size: 1.5rem
+      color: #fff
+      +media("<1280px")
+        font-size: 1em
+      +media("<1024px")
+        display: none
+      &:hover:not(.toolbar-logo-box)
+        cursor: pointer
+      // &:hover > .toolbar-icon:not(.toolbar-icon-user)
+      //   transition: transform 1s ease-in-out
+      //   transform: rotate(90deg)
+
+
+
+      .toolbar-icon
+        width: 48px
+        height: 48px
+        margin-right: 10px
+        font-size: 2em
+        +media("<1280px")
+          width: 30px
+          height: 30px
+          font-size: 1.5em
+
+
+
+
+    .toolbar-logo-box
+      @extend .toolbar-map-settings
+      font-size: 3em
+      color: #fff
+      font-weight:  500
+      letter-spacing: 20px
+      +media("<1024px")
+        order: 1
+        display: flex
+      +media("<768px")
+        font-size: 2.5em
+        letter-spacing: 10px
+      +media("<500px")
+        font-size: 2em
+        letter-spacing: 5px
+
+      .toolbar-logo-text
+        //color: #FF5722
+        .small
+          font-size: 3rem
+          color: #fff
+          +media("<768px")
+            font-size: 2.5rem
+          +media("<500px")
+            font-size: 1.5rem
+
+      .toolbar-logo-icon
+        font-size: 4rem
+        width: 60px
+        height: 60px
+        margin-right: 10px
+
+
+
+
+    .toolbar-user-box
+      @extend .toolbar-map-settings
+      flex-grow: 0
+      +media("<1024px")
+        display: none
+      .toolbar-icon-user
+        @extend .toolbar-icon
+        width: 55px
+        height: 55px
+        border-radius: 55px
+
+    .toolbar-dropdown-button
+      display: none
+      +media("<1024px")
+        display: block
+        order: 2
+
+
+
+  .list-display-box
+    flex-grow: 5
+    display: flex
+    justify-content: flex-start
+    flex-wrap: wrap
+    margin-left: 30px
+    position: relative
+    height: 100vh
+
+
+
+    .display-type
+      display: flex
+      flex-direction: column
+      margin-top: 30px
+      width: 200px
+      height: 170px
+      background-color: #01579B
+      box-shadow: 0 3px 5px #01579B
+      color: #fff
+
+
+
+      .text
+        font-size: 1.3em
+        margin: 10px auto
+
+      .display-options
+        color: #fff
+        margin: auto
+        display: flex
+        flex-direction: column
+
+        .display-options-radio-button
+          color: #ffffff
+          margin: 10px auto
+
+
+    .list-display-item-box
+      width: 200px
+      height: 240px
+      margin: 40px 40px
+      //animation: dive 2s
+      display: flex
+      flex-direction: column
+      justify-content: space-around
+
+
+
+      .list-display-item-header
+        position: relative
+
+      .list-display-item-header-avatar
+        position: absolute
+        top: -45px
+        left: -45px
+        width: 55px
+        height: 55px
+        background-color: #ff5722
+        color: white
+        border-radius: 55px
+        text-align: center
+        line-height: 55px
+
+      .image
+        height: 170px
+        background-color: #eee
+        object-fit: cover
+        // margin-top: 20px
+
+      .list-display-item-vote-box
+        display: flex
+        align-items: center
+        width: 100px
+        justify-content: space-between
+        position: relative
+
+        .list-display-button
+          position: absolute
+          bottom: -30px
+
+        .resolve
+          left: 60px
+
+
+  .pag
+    // background-color: black
+    width: 100%
+    // position: absolute
+    // bottom: 200px
+  //  DISPLAY MAP
+
+  .mapa
+
+    display: flex
+    flex-grow: 2
+    margin: 0
+    position: relative
+
+    .legend
+      display: flex
+      position: absolute
+      width: 190px
+      height: 210px
+      bottom: 10px
+      right: 10px
+      background-color: #01579B
+      box-shadow: 0 3px 5px #01579B
+      color: #fff
+      z-index: 10
+      padding: 7px
+      flex-direction: column
+
+      .text
+        margin: 5px auto
+        color: #fff
+        font-size: 1.5em
+
+      .type
+        font-size: 1.3em
+        padding-bottom: 5px
+        display: flex
+        justify-content: space-between
+        border-bottom: 2px solid #ff5722
+
+      .radio-buttons
+
+        display: inline-flex
+        flex-direction: column
+        font-size: 1.1em
+        justify-content: space-between
+
+
+        .radio-btn
+
+          display: flex
+          justify-content: flex-start
+          margin-right: 10px
+
+      .name
+        display: flex
+        flex-direction: column
+
+        .name-box
+          font-size: 1.1em
+          margin-top: 10px
+          display: flex
+          justify-content: space-between
+          align-items: center
+
+          .color
+            width: 60px
+            //background-color: orange
+            height: 5px
+            border-radius: 5px
+
+
+    .display-type
+      display: flex
+      flex-direction: column
+      position: absolute
+      top: 10px
+      right: 10px
+      z-index: 10
+      width: 200px
+      height: 70px
+      background-color: #01579B
+      box-shadow: 0 3px 5px #01579B
+      color: #fff
+
+      .text
+        font-size: 1.3em
+        margin: auto
+
+      .display-options
+        color: #fff
+        margin: auto
+
+    .map-content
+      margin-top: 200px
+      height: 110px
+      width: 210px
+      +media("<=1366px")
+        margin-top: 120px
+
+  .forma
+    position: relative
+    background-color: #fff
+    width: 405px
+    height: 650px
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    border-radius: 30px
+    padding: 20px
+    border: 1px solid #e2e2e2
+    border-bottom-left-radius: 0
+    box-shadow: 0 0 10px #555
+    z-index: 2
+    +media("<550px")
+      width: 240px
+      height: 600px
+
+
+
+
+
+    .input-box
+
+      display: flex
+      flex-direction: column
+      justify-content: space-between
+
+
+      .left
+        display: flex
+        flex-grow: 1
+        flex-direction: column
+
+        .input-container
+          width: 350px
+          margin-bottom: 40px
+          margin-left: 20px
+          +media("<550px")
+            width: 200px
+
+        .input-textarea
+          width: 350px
+          margin-left: 20px
+          +media("<550px")
+            width: 200px
+
+
+
+      .right
+        display: flex
+        flex-wrap: wrap
+        margin:
+          top: 40px
+          left: 20px
+          right: 20px
+        max-width: 350px
+        height: 220px
+        background-color: #eee
+        border-radius: 15px
+
+        .no-photo-box
+          margin: auto
+          font-style: italic
+          color: #444
+
+        .photo
+          //margin: auto
+          display: flex
+          flex-wrap: wrap
+          //max-width: 250px
+          justify-content: space-between
+          align-content: space-between
+          align-items: flex-start
+
+
+          .image
+            display: flex
+            flex-direction: column
+            position: relative
+            
+            .icon
+              object-fit: cover
+              border-radius: 15px
+              position: relative
+              margin-left: 10px
+              width: 100px
+              height: 100px
+              color: #e1e1e1!important
+              &:hover
+                cursor: zoom-in
+
+            span
+              position: absolute
+              color: #fff
+              top: 5px
+              right: 5px
+              font-size: .8em
+              z-index: 10
+              &:hover
+                cursor: pointer
+
+
+    .buttons-box
+      display: flex
+      +media("<550px")
+        flex-direction: column
+
+      .btn
+        position: absolute
+
+      .done
+        bottom: 106px
+        right: -25px
+
+      .disabled
+        cursor: not-allowed
+
+      .clear
+        bottom: 45px
+        right: -25px
+
+      .inputfile
+        width: 0.1px
+        height: 0.1px
+        opacity: 0
+        overflow: hidden
+        //position: absolute
+        z-index: -1
+      .file-enabled
+        position: absolute
+        bottom: -15px
+        right: -25px
+        display: flex
+        text-align: center
+        align-items: center
+        justify-content: center
+        font-size: 1em
+        height: 40px
+        border-radius: 55px
+        width: 55px
+        height: 55px
+        color: #fff
+        background-color: #FF5722
+        //background-color: #FF5722
+        //justify-content: center
+        &:hover
+          cursor: pointer
+          font-weight: bold
+      .file-disabled
+        @extend .file-enabled
+        &:hover
+          cursor: not-allowed
+
+
+  .des-wrap
+    position: relative
+    background-color: #fff
+    width: 370px
+    height: 200px
+    display: flex
+    flex-direction: column
+    flex-wrap: wrap
+    justify-content: space-between
+    border-radius: 30px
+    padding: 20px
+    border: 1px solid #e2e2e2
+    border-bottom-left-radius: 0
+    box-shadow: 0 0 10px #555
+    z-index: 2
+    +media("<550px")
+      width: 240px
+      height: 350px
+
+    .btn
+      position: absolute
+    .clear
+      top: -20px
+      right: -15px
+
+    .resolve
+      bottom: -15px
+      right: 45px
+    .report
+
+      bottom: -15px
+      right: -15px
+
+
+    .des-title
+      display: flex
+      margin: 5px auto
+      font-size: 1.5em
+
+      &:hover
+        color: #FF5722
+        cursor: pointer
+
+    .des-des
+      font-style: italic
+      color: #aaa
+
+
+.image-zoom-box
+  position: absolute
+  width: 100%
+  height: 100vh
+  background-color: rgba(0, 0, 0, .8)
+  display: flex
+  top: 0
+  left: 0
+  right: 0
+  margin: 0 auto
+  z-index: 400
+  animation: dive 1s
+  overflow: hidden
+  //border: 1px solid red
+
+  .image-zoom
+    margin: auto
+    position: relative
+
+
+    .image-zoom-x
+      color: #111
+      font-size: 2em
+      position: absolute
+      //color: rgba(255,255,255, .2)
+      top: 0
+      right: 5px
+      transition: all .5s ease-in-out
+      &:hover
+        cursor: pointer
+        color: rgba(255,255,255, .7)
+
+    .image-zoom-image
+      max-width: 800px
+      max-height: 600px
+
+@keyframes dive
+  from
+    opacity: 0
+
+  to
+    opacity: 1
+
+@keyframes diveout
+  from
+    opacity: 1
+  to
+    opacity: 0

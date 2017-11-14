@@ -1,0 +1,44 @@
+<div class="comment-box">
+  <h1 md-dialog-title class="comment-title">Edit comment</h1>
+  <div class="comment-boxx" md-dialog-content>
+    <md-input-container class="comment-input" color="primary">
+      <textarea mdInput placeholder="Comment..."  maxlength="200" cols="30" #cmnt></textarea>
+      <!--<md-icon mdPrefix="">mode_edit</md-icon>-->
+      <md-hint align="start"><span style="color: #ff5722;">edit your comment</span> </md-hint>
+      <md-hint align="end"><span style="color: #ff5722;">{{cmnt.value.length}} / 200</span></md-hint>
+    </md-input-container>
+    <div class="images-box" *ngIf="imageUploadService.imagesObject.showImages.length != 0">
+      <div class="image" *ngFor="let img of imageUploadService.imagesObject.showImages">
+        <img [src]="img['url']" alt="" class="comment-img">
+        <span mdTooltip="Remove image" (click)="onRemoveImage(img['url'])">&#10006;</span>
+      </div>
+    </div>
+    <div class="no-img" *ngIf="imageUploadService.imagesObject.showImages.length == 0">
+      Choose images for upload
+    </div>
+  </div>
+  <div md-dialog-actions class="comment-add">
+    <div class="left">
+      <button md-fab class="comment-button"
+              md-dialog-close="false"
+              mdTooltip="back"><md-icon>arrow_back</md-icon></button>
+      <input type="file"
+             id="file2"
+             class="inputfile"
+             multiple
+             [disabled]="imageUploadService.imagesObject.postImages.length >= 6"
+             (change)="imageUploadService.onAddImage($event.target.files)"/>
+      <label for="file2" [mdTooltip]="imageObject.toolTip()" [ngClass]="imageObject.class()">
+        <md-icon style="margin-left: 3px">add_a_photo</md-icon>
+      </label>
+    </div>
+    <div [mdTooltip]="commentValidation.toolTip(cmnt.value.length)">
+      <button md-fab
+              [disabled]="cmnt.value.length < 10"
+              (click)="onComment(cmnt.value)"
+              [ngClass]="commentValidation.class(cmnt.value.length)"
+              md-dialog-close="true"><md-icon>send</md-icon></button>
+    </div>
+  </div>
+
+</div>

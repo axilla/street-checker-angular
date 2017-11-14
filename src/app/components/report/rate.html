@@ -1,0 +1,22 @@
+<div class="rate-box">
+  <h1 md-dialog-title class="rate-title">Rate location</h1>
+  <div md-dialog-content class="rate-content">
+    <div class="rate-stars" *ngIf="rateFlag">
+      choosen rate: {{rate}}
+    </div>
+    <md-slider
+      style="width: 300px; margin-top: 20px;"
+      max="10"
+      min="0"
+      thumbLabel="true"
+      color="primary"
+      (change)="showGrade($event.value)"
+    ></md-slider>
+
+
+  </div>
+  <div md-dialog-actions class="rate-buttons">
+    <button md-raised-button md-dialog-close="true" class="btn">Confirm</button>
+    <button md-raised-button md-dialog-close="false" class="btn">Back</button>
+  </div>
+</div>

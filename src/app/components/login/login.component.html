@@ -1,0 +1,84 @@
+
+
+<div class="map-container white-inputs" #mapa>
+  <div class="faded-box">
+    <div class="welcome-box">
+      <div class="welcome-inner-box" >
+        <div class="welcome-text-white" #name></div>
+        <div class="welcome-text-orange" #site></div>
+      </div>
+
+
+
+
+
+
+    </div>
+    <div class="login-box" >
+      <div class="login-inner-box" #login>
+        <div class="register-button"  #registerBtn (click)="registerAnimation()">
+          <md-icon style="margin: auto; color: #fff;" *ngIf="register_data.register" mdTooltip="Register">person_add</md-icon>
+          <md-icon style="margin: auto; color: #fff;" *ngIf="!register_data.register" mdTooltip="Login">person</md-icon>
+        </div>
+
+
+        <div class="login-input-box" (keyup.enter)="onLogin(username.value, password.value)"  *ngIf="register_data.register">
+
+          <div class="login-text"></div>
+          <md-input-container class="inpt" color="accent" >
+            <input mdInput placeholder="Username/Email" #username>
+            <md-icon mdPrefix style="font-size: 1rem; margin-right: 20px">mode_edit</md-icon>
+          </md-input-container>
+
+          <md-input-container class="inpt" color="accent">
+            <input mdInput placeholder="Password" #password [type]="show_password">
+            <md-icon mdPrefix style="font-size: 1rem; margin-right: 20px">more_horiz</md-icon>
+              <md-icon mdSuffix style="font-size: 1rem; cursor: pointer;" (click)="showPassword()">visibility</md-icon>
+          </md-input-container>
+
+          <button md-raised-button color="accent" class="login-btn" (click)="onLogin(username.value, password.value)">Login</button>
+          <div class="login-continue-text" (click)="onAnonymousLogin()">continue as anonymous user</div>
+          <!--<button md-raised-button color="warn">Go as unregistered user</button>-->
+
+        </div>
+
+
+        <div class="register-input-box" #registerForm  *ngIf="!register_data.register">
+
+          <div class="login-text" >
+            <img src="../../../assets/images/person.png" alt="" *ngIf="!image_data.image">
+            <img [src]="image_data.image" alt="" *ngIf="image_data.image"/>
+          </div>
+          <input type="file"  id="file" class="inputfile" (change)="onSetImage($event.target.files)"/>
+          <label for="file">
+            <md-icon mdTooltip="Add profile image">add_a_photo</md-icon>
+
+          </label>
+          <md-input-container class="inpt-register" color="accent" >
+            <input mdInput placeholder="Email" #email>
+            <md-icon mdPrefix style="font-size: 1rem; margin-right: 20px">email</md-icon>
+          </md-input-container>
+
+          <md-input-container class="inpt-register" color="accent" >
+            <input mdInput placeholder="Username" #username>
+            <md-icon mdPrefix style="font-size: 1rem; margin-right: 20px">mode_edit</md-icon>
+          </md-input-container>
+
+          <md-input-container class="inpt-register" color="accent">
+            <input mdInput placeholder="Password" #password [type]="show_password">
+            <md-icon mdPrefix style="font-size: 1rem; margin-right: 20px">more_horiz</md-icon>
+            <md-icon mdSuffix style="font-size: 1rem; cursor: pointer;" (click)="showPassword()">visibility</md-icon>
+          </md-input-container>
+          <!--  image = base64 imageFormData = file-->
+          <button md-raised-button color="accent" class="login-btn" (click)="onRegister(username.value, email.value, password.value)" >Register</button>
+          <!--<button md-raised-button color="warn">Go as unregistered user</button>-->
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,44 @@
+@import "../../../../node_modules/include-media/dist/include-media"
+
+
+.display-options-box
+  display: flex
+  flex-direction: column
+  align-items: flex-start
+  .display-option-header
+    margin: 0 auto
+    padding: 45px 10px
+    font-size: 1.5em
+    background-color: #01579B
+    border-bottom: 4px solid #f44336
+    box-shadow: 0 0 15px #f44336
+    color: #fff
+  .display-options-radio-box
+    display: flex
+    flex-direction: column
+    margin: 20px auto
+    .display-options-radio-button
+      display: flex
+      justify-content: space-between
+      margin-top: 10px
+      font-size: 1.5em
+      width: 200px
+
+.search-form
+  @extend .display-options-box
+
+  .search-form-header
+    @extend .display-option-header
+    margin: 0
+    padding: 45px 105px
+    +media("<480px")
+      padding: 15px 100px
+  .search-form-inputs-box
+    @extend .display-options-radio-box
+    font-size: 1em
+    .search-form-input
+      margin: 20px
+
+    .search-form-button
+      background-color: #01579b
+      color: #fff

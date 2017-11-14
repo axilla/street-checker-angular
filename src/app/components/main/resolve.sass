@@ -1,0 +1,176 @@
+.resolve-box
+  width: 570px
+  height: auto
+  overflow: hidden
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+
+  .resolve-header
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: space-around
+    background-color: #01579B
+    height: 70px
+    //line-height: 70px
+    color: #fff
+    border-bottom: 4px solid #FF5722
+    box-shadow: 0 0 15px #FF5722
+    background-color: #01579b
+
+    .title
+      font-size: 1.3em
+
+
+
+  .resolve-tip
+    margin: auto
+    font:
+      style: italic
+      size: 1.1em
+    color: #bdbdbd
+
+  .resolve-form
+    width: 450px
+    margin: 35px auto
+
+    .resolve-textarea
+      width: 450px
+
+  .resolve-image-upload-box
+    margin: auto
+    display: flex
+    width: 400px
+    height: 250px
+    flex-wrap: wrap
+    justify-content: flex-start
+    align-content: space-between
+    align-items: flex-start
+
+
+    .no-photo-box
+      @extend .resolve-tip
+
+    .image
+      display: flex
+      flex-direction: column
+      justify-content: flex-start
+      align-content: space-between
+      align-items: flex-start
+      position: relative
+
+
+
+      .icon
+        border-radius: 15px
+        position: relative
+        margin:
+          left: 10px
+          bottom: 10px
+        width: 110px
+        height: 100px
+        color: #e1e1e1!important
+        object-fit: cover
+        &:hover
+          cursor: zoom-in
+
+      span
+        position: absolute
+        color: #fff
+        top: 5px
+        right: 5px
+        font-size: .8em
+        z-index: 10
+        &:hover
+          cursor: pointer
+
+.resolve-buttons
+  display: flex
+  margin:
+    top: 60px
+    left: auto
+    right: auto
+  height: 35px!important
+  width: 450px
+  position: relative
+  .btn
+    margin-left: 15px
+  .send
+    position: absolute
+    order: 3
+    right: 0
+  .send-disabled
+    @extend .send
+    cursor: not-allowed
+  .send-div
+    position: absolute
+    order: 3
+    right: 0
+    width: 50px
+    height: 50px
+
+
+  .upload
+    width: 55px
+    height: 55px
+    display: flex
+    align-items: center
+    justify-content: center
+    background-color: #FF5722
+    border-radius: 55px
+    color: #fff
+    box-shadow: 0 1px 1px #aaa
+    cursor: pointer
+
+  .upload-disabled
+    @extend .upload
+    cursor: not-allowed
+
+
+
+
+  .inputfile
+    width: 0.1px
+    height: 0.1px
+    opacity: 0
+    overflow: hidden
+    //position: absolute
+    z-index: -1
+
+.image-zoom-box
+  position: absolute
+  width: 100%
+  height: 100vh
+  background-color: rgba(0, 0, 0, .8)
+  display: flex
+  top: 0
+  left: 0
+  right: 0
+  margin: 0 auto
+  z-index: 400
+  animation: dive 1s
+  overflow: hidden
+  //border: 1px solid red
+
+  .image-zoom
+    margin: auto
+    position: relative
+
+
+    .image-zoom-x
+      color: #111
+      font-size: 2em
+      position: absolute
+      //color: rgba(255,255,255, .2)
+      top: 0
+      right: 5px
+      transition: all .5s ease-in-out
+      &:hover
+        cursor: pointer
+        color: rgba(255,255,255, .7)
+
+    .image-zoom-image
+      max-width: 800px
+      max-height: 600px
+

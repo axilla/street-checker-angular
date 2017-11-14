@@ -1,0 +1,359 @@
+<md-sidenav-container>
+  <div class="outer-wrap">
+    <!--      NAVBAR    -->
+    <md-toolbar class="toolbar">
+      <div class="toolbar-map-settings" [mdMenuTriggerFor]="menu">
+        <md-icon class="toolbar-icon">settings</md-icon>
+        map settings
+        <md-icon>arrow_drop_down</md-icon>
+      </div>
+      <div class="toolbar-logo-box" (click)="navigateBack()">
+        <span class="toolbar-logo-text">S<span class="small">treet</span>C<span class="small">hecker</span></span>
+      </div>
+      <div class="toolbar-user-box" (click)="getSelf()" (click)="rightSidenav.open()" *ngIf="user != undefined">
+        <img [src]="user['profile_images'][0]['full_url']" alt="" class="toolbar-icon-user">
+        {{user['username']}}
+      </div>
+      <button md-icon-button [mdMenuTriggerFor]="dropMenu" class="toolbar-dropdown-button">
+        <md-icon style="color: white!important">more_vert</md-icon>
+      </button>
+    </md-toolbar>
+
+    <!--      LIST VIEW     -->
+    <div class="list-display-box" *ngIf="!flags.displayFlag" #listDisplay>
+      <div class="display-type" *ngIf="user != undefined">
+        <div class="text">Choose list display</div>
+        <md-radio-group class="display-options" (change)="getMyResolves($event.value)">
+          <md-radio-button value="1" class="display-options-radio-button" [checked]="true">All locations
+          </md-radio-button>
+          <md-radio-button value="2" class="display-options-radio-button">My resolves</md-radio-button>
+          <md-radio-button value="3" class="display-options-radio-button">My locations</md-radio-button>
+        </md-radio-group>
+      </div>
+      <md-card class="list-display-item-box" *ngFor="let item of object_of_arrays.search">
+        <md-card-header class="list-display-item-header">
+          <div md-card-avatar class="list-display-item-header-avatar" mdTooltip="Location category level">
+            &#33; {{item.level}}
+          </div>
+          <md-card-title (click)="onNavigateToReport(item.id)" style="cursor: pointer;"
+                         mdTooltip="See location details">{{item.title}}
+          </md-card-title>
+          <md-card-subtitle>{{item.category}}</md-card-subtitle>
+        </md-card-header>
+        <img md-card-image src="../../../assets/images/no-image.png" class="image" *ngIf="item.fullUrl == null">
+        <img md-card-image [src]="item.fullUrl" class="image" *ngIf="item.fullUrl != null">
+        <md-card-content>
+        </md-card-content>
+        <md-card-actions class="list-display-item-vote-box">
+          <button md-fab color="accent" class="list-display-button more" (click)="showSingleReport(item.id)"
+                  mdTooltip="See more information about this location">
+            <md-icon>info</md-icon>
+          </button>
+          <button md-fab color="accent" class="list-display-button resolve" (click)="openResolveModal(item.id)"
+                  mdTooltip="Send us your suggestion" *ngIf="item.active == 1">
+            <md-icon>feedback</md-icon>
+          </button>
+          <button md-fab color="accent" class="list-display-button resolve" (click)="onReopen(item.id)"
+                  mdTooltip="Reopen location" *ngIf="item.active == 0">
+            <md-icon>loop</md-icon>
+          </button>
+        </md-card-actions>
+      </md-card>
+      <div class="pag">
+        <md-paginator [length]="object_of_arrays.pagination_length.length" class="pagination"
+                      style="background-color: #fafafa " [pageSize]="15" (page)="paginationPageChange($event)"
+                      *ngIf="!flags.displayFlag"></md-paginator>
+      </div>
+    </div>
+
+    <!--      DISPLAY MAP     -->
+    <div class="mapa" #mapa>
+      <!--      LEGEND      -->
+      <div class="legend">
+        <div class="text" *ngIf="mapObject.layers.flag.mapType == 0">Legend</div>
+        <div class="text" *ngIf="mapObject.layers.flag.mapType == 1">Choose category</div>
+        <div class="type">
+          <span>category</span>
+          <span *ngIf="mapObject.layers.flag.mapType == 0">color</span>
+        </div>
+        <div class="name" *ngIf="mapObject.layers.flag.mapType == 0">
+          <div class="name" *ngFor="let category of object_of_arrays.categories">
+            <div class="name-box"><span>{{category.title}}</span>
+              <div class="color" [ngStyle]="{'background-color': category['color']}"></div>
+            </div>
+          </div>
+        </div>
+        <md-radio-group labelPosition="before" class="radio-buttons" *ngIf="mapObject.layers.flag.mapType == 1"
+                        [(ngModel)]="categoryValue" (change)="chooseHeatmapCategory()">
+          <div class="radio-buttons" *ngFor="let category of object_of_arrays.categories">
+            <div style="display: flex; justify-content: space-between; margin-top: 5px">
+              <div>{{category.title}}</div>
+              <md-radio-button [value]="category.title" class="radio-btn"></md-radio-button>
+            </div>
+          </div>
+        </md-radio-group>
+      </div>
+      <div class="display-type">
+        <div class="text">Choose map display</div>
+        <md-radio-group class="display-options" [disabled]="!flags.displayFlag"
+                        (change)="changeMapLayers($event.value)">
+          <md-radio-button value="1" class="display-options-radio-button">Heat map</md-radio-button>
+          <md-radio-button value="2" class="display-options-radio-button" [checked]="true">Pin</md-radio-button>
+        </md-radio-group>
+      </div>
+      <div class="display-type map-content">
+        <div class="text">Choose map content</div>
+        <md-radio-group class="display-options" style="padding-left: 5px" [disabled]="!flags.displayFlag"
+                        (change)="onChangePoints($event.value)">
+          <md-radio-button value="1" class="display-options-radio-button" [checked]="true">All locations
+          </md-radio-button>
+          <md-radio-button value="2" class="display-options-radio-button">My locations</md-radio-button>
+          <md-radio-button value="3" class="display-options-radio-button">My resolved locations</md-radio-button>
+        </md-radio-group>
+      </div>
+    </div>
+
+    <!--      ADD LOCATION FORM -->
+    <form class="forma" #forma [formGroup]="single_location_form">
+      <div class="input-box">
+
+        <div class="left">
+          <!--     TITLE     -->
+          <md-input-container class="input-container">
+            <input mdInput placeholder="Title" formControlName="title">
+            <md-icon mdSuffix style="color: #aaa">create</md-icon>
+          </md-input-container>
+          <!--     TYPE      -->
+          <md-select class="input-container" placeholder="Choose type" formControlName="type">
+            <md-option *ngFor="let category of object_of_arrays.categories" [value]="category.id">
+              {{ category.title }}
+            </md-option>
+          </md-select>
+          <div style="color: #bdbdbd">
+            <span style="margin-left: 20px">Set level</span>
+            <md-slider class="input-container" max="10" min="0" thumbLabel="true" formControlName="level"></md-slider>
+          </div>
+
+          <!--     DESCRIPTION     -->
+          <md-input-container class="input-textarea">
+            <textarea mdInput placeholder="Description" rows="5" maxlength="200" cols="27" #desc
+                      formControlName="description"></textarea>
+            <md-hint align="start"><span style="color: #FF5722;">Type description of the location</span></md-hint>
+            <md-hint align="end">{{desc.value.length}} / 200</md-hint>
+          </md-input-container>
+
+        </div>
+        <!--      LEVEL     -->
+        <div class="right">
+          <div class="no-photo-box" *ngIf="imageUploadService.imagesObject.showImages.length == 0">
+            Choose images for upload
+          </div>
+          <div class="photo" *ngFor="let img of imageUploadService.imagesObject['showImages']">
+            <div class="image">
+              <img [src]="img['url']" class="icon" (click)="imageUploadService.onShowImage(pic.src)" #pic
+                   mdTooltip="Zoom image">
+              <span (click)="imageUploadService.onRemoveImg(pic.src, img.name)" mdTooltip="Remove image">&#10006;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="buttons-box">
+        <div>
+          <button md-fab
+                  class="btn done"
+                  type="button"
+                  (click)="addLocation(true)"
+                  [disabled]="!single_location_form.valid || imageUploadService.imagesObject.postImages.length > 6">
+            <md-icon [mdTooltip]="addPointValidation.add()">done</md-icon>
+          </button>
+        </div>
+        <div>
+          <button md-fab
+                  class="btn clear"
+                  type="button"
+                  (click)="addLocation(false)"
+                  mdTooltip="Cancel">
+            <md-icon>clear</md-icon>
+          </button>
+        </div>
+        <input type="file" [disabled]="imageUploadService.imagesObject.postImages.length >= 6" id="file"
+               class="inputfile" multiple (change)="imageUploadService.onAddImage($event.target.files)"/>
+        <label for="file" [mdTooltip]="addPointValidation.upload()" [ngClass]="addPointValidation.classUpload()">
+          <md-icon>file_upload</md-icon>
+        </label>
+      </div>
+    </form>
+  </div>
+
+  <!--      SHOW POINT DESCRIPTION      -->
+
+  <div class="des-wrap" #description>
+    <button md-fab (click)="onHideDescription()" class="btn clear" mdTooltip="close">
+      <md-icon>clear</md-icon>
+    </button>
+    <button md-fab (click)="onNavigateToReport()" class="btn report" mdTooltip="See location details">
+      <md-icon>description</md-icon>
+    </button>
+    <button md-fab class="btn resolve" (click)="openResolveModal(location_description.id)"
+            mdTooltip="Send us your suggestion">
+      <md-icon>feedback</md-icon>
+    </button>
+    <div class="des-title" (click)="onNavigateToReport(location_description.id)" mdTooltip="See location details">
+      {{location_description.title}}
+    </div>
+    <div class="des-des">"{{location_description.description}}"</div>
+    <div class="des-rate">
+      <md-chip-list class="des-rate">
+        <md-chip color="accent" selected="true" style="font-size: 1.05em" mdTooltip="Location category level">&#33;
+          {{location_description.level}}
+        </md-chip>
+      </md-chip-list>
+    </div>
+
+  </div>
+
+  <!--      RIGHT SIDEBAR     -->
+
+  <md-sidenav #rightSidenav class="user-sidebar" align="end">
+    <div class="user-sidebar-header" *ngIf="user != undefined">
+      <div class="user-name">{{user['username']}} <span>{{user['email']}}</span></div>
+    </div>
+    <div class="user-content-box" *ngIf="user != undefined">
+      <div class="user-comments">
+        <div class="user-static">
+          <md-icon class="icon">comment</md-icon>
+          <span>Comments</span>
+        </div>
+        <div class="user-dynamic">{{user['comments']}}</div>
+      </div>
+      <div class="user-reports">
+        <div class="user-static">
+          <md-icon class="icon">report_problem</md-icon>
+          <span>Responses</span>
+        </div>
+        <div class="user-dynamic">{{user['responses']}}</div>
+      </div>
+      <div class="user-locations">
+        <div class="user-static">
+          <md-icon class="icon">location_on</md-icon>
+          <span>Reports</span>
+        </div>
+        <div class="user-dynamic">{{user['reports']}}</div>
+      </div>
+      <div class="user-sidebar-change-username" #usernameChange>
+        <md-input-container>
+          <input mdInput placeholder="Enter new username" #username>
+        </md-input-container>
+        <md-icon class="send-icon" (click)="user_methods.update_username(username.value)"
+                 mdTooltip="send us new username" mdTooltipPosition="before">send
+        </md-icon>
+      </div>
+      <div class="user-sidebar-change-username" #emailChange>
+        <md-input-container>
+          <input mdInput placeholder="Enter new Email" #email>
+        </md-input-container>
+        <md-icon class="send-icon" (click)="user_methods.update_email(email.value)" mdTooltip="send us new email"
+                 mdTooltipPosition="before">send
+        </md-icon>
+      </div>
+
+      <button md-raised-button class="user-sidebar-button " (click)="user_methods.show_username()">Change username
+      </button>
+      <button md-raised-button class="user-sidebar-button " (click)="user_methods.show_email()">Change email</button>
+      <button md-raised-button class="user-sidebar-button orange" (click)="user_methods.logout()">Logout</button>
+    </div>
+
+  </md-sidenav>
+
+  <!--      LEFT SIDENAV     -->
+  <md-sidenav #leftSidenav>
+    <!--      DISPLAY OPTIONS     -->
+    <div class="display-options-box" *ngIf="sidenav_type == 'display'">
+      <div class="display-option-header">
+        Choose type of display
+      </div>
+
+      <md-radio-group class="display-options-radio-box" (change)="changeMapDisplay($event.value)"
+                      (change)="leftSidenav.close()">
+        <md-radio-button value="1" class="display-options-radio-button" [checked]="true">Show map</md-radio-button>
+        <md-radio-button value="2" class="display-options-radio-button">Show list of points</md-radio-button>
+      </md-radio-group>
+    </div>
+
+    <!--      SEARCH FORM    -->
+    <div class="search-form" *ngIf="sidenav_type == 'search'" [formGroup]="search_form">
+      <div class="search-form-header">
+        Search
+      </div>
+      <div class="search-form-inputs-box">
+        <md-input-container class="search-form-input">
+          <input mdInput placeholder="Title" formControlName="title">
+        </md-input-container>
+        <md-select class="search-form-input" placeholder="Category" formControlName="category">
+          <md-option>All</md-option>
+          <md-option *ngFor="let type of object_of_arrays.categories" [value]="type.id">
+            {{ type.title }}
+          </md-option>
+        </md-select>
+        <md-select class="search-form-input" placeholder="Active" formControlName="active">
+          <md-option>All</md-option>
+          <md-option value="1">Active</md-option>
+          <md-option value="0">Not active</md-option>
+        </md-select>
+        <div class="date">
+          <md-input-container class="search-form-input">
+            <input mdInput [mdDatepicker]="pickerFrom" placeholder="Date from" formControlName="date_after" #datep>
+            <button mdSuffix [mdDatepickerToggle]="pickerFrom"></button>
+          </md-input-container>
+          <md-datepicker #pickerFrom></md-datepicker>
+          <!--<md-checkbox checked="true" (change)="onCheck('date_after')"></md-checkbox>-->
+        </div>
+        <div class="date">
+          <md-input-container class="search-form-input">
+            <input mdInput [mdDatepicker]="pickerTo" placeholder="Date to" formControlName="date_before">
+            <button mdSuffix [mdDatepickerToggle]="pickerTo"></button>
+          </md-input-container>
+          <md-datepicker #pickerTo></md-datepicker>
+          <!--<md-checkbox checked="true" (change)="onCheck('date_after')"></md-checkbox>-->
+        </div>
+
+        <button md-raised-button class="search-form-button" (click)="userSearch()" (click)="leftSidenav.close()">Go
+        </button>
+      </div>
+
+    </div>
+
+  </md-sidenav>
+</md-sidenav-container>
+
+<!--      MAP OPTIONS MENU      -->
+<md-menu #menu="mdMenu">
+  <button md-menu-item (click)="leftSidenav.open(); chooseSidenav('display')">
+    <md-icon>video_label</md-icon>
+    Show display options
+  </button>
+  <button md-menu-item (click)="leftSidenav.open(); chooseSidenav('search')">
+    <md-icon>search</md-icon>
+    Show search
+  </button>
+</md-menu>
+
+<!--      TOOLBAR MENU      -->
+<md-menu #dropMenu="mdMenu">
+  <button md-menu-item [mdMenuTriggerFor]="menu">
+    <md-icon>settings</md-icon>
+    <span>map settings</span>
+  </button>
+  <button md-menu-item (click)="rightSidenav.open()">
+    <md-icon>account_circle</md-icon>
+    <span>Name Lastname</span>
+  </button>
+</md-menu>
+
+<div class="image-zoom-box" *ngIf="imageUploadService.zoomUrl != null" #zoombox
+     (click)="imageUploadService.onHideImage()">
+  <div class="image-zoom">
+    <span class="image-zoom-x" (click)="imageUploadService.onHideImage()">&#10006;</span>
+    <img [src]="imageUploadService.zoomUrl " alt="" class="image-zoom-image">
+  </div>
+</div>

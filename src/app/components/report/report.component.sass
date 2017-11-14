@@ -1,0 +1,529 @@
+@import "../../../../node_modules/include-media/dist/include-media"
+
+
+.box
+  display: flex
+  flex-direction: column
+  position: relative
+  height: 100vh
+  .toolbar
+    display: flex
+    justify-content: space-between
+    background-color: #01579B
+    min-height: 80px
+    padding: 10px 30px
+    border-bottom: 4px solid #FF5722
+    box-shadow: 0 0 15px #FF5722
+    z-index: 200
+    +media("<500px")
+      padding: 10px
+
+    .toolbar-flex
+      flex-grow: 1
+
+    .toolbar-logo-box
+      font-size: 3em
+      color: #fff
+      font-weight:  500
+      flex-grow: 1
+      letter-spacing: 20px
+      +media("<1024px")
+        order: 2
+        display: flex
+      +media("<768px")
+        font-size: 2.5em
+        letter-spacing: 10px
+      +media("<500px")
+        font-size: 2em
+        letter-spacing: 5px
+
+      .toolbar-logo-text
+        //color: #FF5722
+        .small
+          font-size: 3rem
+          color: #fff
+          +media("<768px")
+            font-size: 2.5rem
+          +media("<500px")
+            font-size: 1.5rem
+
+    .toolbar-user-box
+      display: flex
+      order: 3
+      align-self: flex-end
+      align-items: center
+      font-size: 1.5rem
+      color: #fff
+      &:hover
+        cursor: pointer
+
+      .toolbar-icon-user
+        margin-right: 10px
+        font-size: 2em
+        width: 55px
+        height: 55px
+        border-radius: 55px
+
+
+  .outer-box
+    
+    display: flex
+
+    align-content: space-around
+    flex-direction: row
+    justify-content: space-around
+
+    .report-box
+      display: flex
+      flex-direction: column
+      margin: 20px auto
+      //width: 100%
+      //height: 100vh
+      justify-content: space-between
+      position: relative
+
+      .report-box-item
+        display: flex
+        width: 600px
+        min-height: 320px
+        background-color: #eaeaea
+        box-shadow: 0 3px 5px #ddd
+        position: relative
+
+        .solved
+          position: absolute
+          top: -10px
+          right: -15px
+          width: 55px
+          height: 55px
+          border-radius: 55px
+          background-color: #01579b
+          color: #ffffff
+          display: flex
+          justify-content: center
+          align-items: center
+
+
+        .report-box-item-image-box
+          grow: 1
+          display: flex
+          flex-direction: column
+          justify-content: space-around
+
+          .no-images
+            display: flex
+            text-align: center
+            margin: auto 10px
+            justify-content: center
+            color: #999999
+
+          .image-box-large
+            width: 230px
+            height: 190px
+            margin: 5px
+            img
+              border-radius: 15px
+              width: 230px
+              height: 190px
+              object-fit: cover
+              &:hover
+                cursor: zoom-in
+
+          .image-box-small
+            display: flex
+            grow: 1
+            display: flex
+            margin: 10px 5px
+            flex-wrap: wrap
+            justify-content: flex-start
+            align-content: space-around
+            width: 230px
+            height: 140px
+
+
+            .small
+              grow: 1
+              width: 70px
+              height: 60px
+              margin-right: 5px
+              img
+                object-fit: cover
+                border-radius: 10px
+                width: 70px
+                height: 50px
+                &:hover
+                  cursor: pointer
+
+        .report-box-item-text-box
+          position: relative
+          width: 590px
+          height: 300px
+          display: flex
+          flex-direction: column
+          justify-content: flex-start
+          //background-color: #ddd
+
+          .text-box-row-1
+            display: flex
+            justify-content: space-around
+            align-items: baseline
+            margin: 20px 0
+
+
+            .text-box-location
+              font-size: 2em
+
+
+          .text-box-row-2
+            display: flex
+            justify-content: space-around
+
+            .text-box-comment-button
+              position: absolute
+
+            .reopen
+              bottom: -35px
+              right: 180px
+            .show-comments
+              right: -15px
+              bottom: -25px
+
+            .add-coment
+              right: -15px
+              bottom: -35px
+
+            .send-response
+              right: 50px
+              bottom: -35px
+
+            .location-delete
+              right: 115px
+              bottom: -35px
+
+            .rate
+              right: 45px
+              bottom: -25px
+
+            .text-box-comments
+              font-size: 1rem
+              border-bottom: 1px solid #aaa
+              transition: all 1s
+              &:hover
+                cursor: pointer
+                border-bottom: 2px solid #888
+
+          .text-box-row-3
+            display: flex
+            flex-direction: column
+            margin: 30px 20px
+
+          .text-box-slider
+            position: absolute
+            bottom: -70px
+            right: 0
+            display: flex
+            margin-left: 15px
+            align-items: center
+
+
+      .resolve-box
+        display: flex
+        flex-direction: column
+        width: 600px
+        min-height: 450px
+        margin-top: 30px
+        background-color: #eaeaea
+        box-shadow: 0 3px 5px #ddd
+
+        .no-responses
+          margin: auto
+          font-size: 2em
+          color: #999
+
+        .title
+          font-size: 1.1em
+          color: #999
+          margin: 10px auto
+
+
+
+
+        .card-box
+          display: flex
+          
+
+          .resolve-card-box
+            display: flex
+            flex-direction: column
+            height: 380px
+            margin: 10px
+            width: 250px
+
+
+
+            .resolve-card-galery
+              height: 160px
+              width: 100%
+              position: relative
+              border-bottom: 3px solid #FF5722
+
+              .cover-img
+                width: 100%
+                height: 160px
+                object-fit: cover
+
+              .delete-response
+                position: absolute
+                top: -15px
+                right: -15px
+
+              .resolve
+                position: absolute
+                top: -15px
+                
+
+              .galery
+                position: absolute
+                bottom: 3px
+                left: 3px
+                background-color: #ff5722
+                color: #fff
+                width: 80px
+                height: 25px
+                text-align: center
+                line-height: 25px
+                cursor: pointer
+                border-top-right-radius: 30px
+                border-bottom-left-radius: 30px
+                border-top-left-radius: 10px
+                border-bottom-right-radius: 10px
+
+              .solution
+                display: flex
+                justify-content: center
+                align-items: center
+                position: absolute
+                bottom: -15px
+                z-index: 999
+                right: 0
+                width: 100px
+                height: 25px
+                border-radius: 10px
+                font-size: .75em
+                background-color: #01579b
+                color: white
+
+            .resolve-card-content
+              display: flex
+              height: 240px
+              flex-direction: column
+              justify-content: space-between
+              padding: 1px 10px
+              font-size: .85em
+              position: relative
+              background-color: #fff
+              box-shadow: -1px 1px 10px #c1c1c1
+
+              .title
+                margin: 8px
+
+              .buttons
+                position: absolute
+                bottom: -20px
+
+              .like
+                left: 60px
+                
+              
+
+              .like-box
+                display: flex
+                flex-direction: column
+                align-self: flex-end
+                align-items: flex-start
+
+                .likes
+                  display: flex
+                  width: 60px
+                  justify-content: space-between
+                  align-items: center
+                  //width: 35px
+                  //height: 35px
+                  //border-radius: 35px
+                  color: #999
+                  font-size: .89em
+                  margin-top: 5px
+
+                .number
+                  font-size: 1.2em
+                  margin-left: 5px
+
+    .comments
+      display: flex
+      position: relative
+      margin: 20px auto
+      flex-direction: column
+      width: 650px
+      height: 800px
+      background-color: #eaeaea
+      box-shadow: 0 3px 5px #ddd
+      +media("<1650px")
+        width: 600px
+
+
+
+      .title
+        margin: 10px auto
+        font-size: 1.7em
+        color: #999
+
+      .comment-box-outer
+        width: 650px
+        height: 800px
+        margin: 10px 10px
+        display: flex
+        flex-direction: column
+        justify-content: flex-start
+        overflow-y: scroll
+        +media("<1650px")
+          width: 550px
+
+        &::-webkit-scrollbar
+          width: 8px
+
+
+
+        &::-webkit-scrollbar-track
+          -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3)
+          background-clip: content-box
+          border-radius: 10px
+          width: 12px
+
+        &::-webkit-scrollbar-thumb:vertical
+          background-color: #ff5722
+          border-radius: 10px
+
+
+
+        .comment-box-inner
+          display: flex
+          background-color: #ddd
+          min-height: 120px
+          width: 100%
+          margin: 10px 0
+          box-shadow: -1px 1px 10px #c1c1c1
+
+
+          .comment-avatar
+            width: 95px
+            height: 90px
+            margin: auto 10px
+            position: relative
+
+            .avatar
+              border-radius: 10px
+              width: 95px
+              height: 90px
+              object-fit: cover
+            .edit-btn
+              position: absolute
+              bottom: -30px
+            .edit
+              right: -10px
+            .delete
+              right: 34px
+
+
+        .comment-text-box
+          display: flex
+          flex-direction: column
+          justify-content: space-between
+          height: 110px
+          width: 100%
+          margin: auto 5px
+
+          .comment-text
+
+          .comment-chip
+            display: flex
+            justify-content: flex-end
+            align-items: center
+
+            .galery
+              margin-right: 5px
+            .galery-disabled
+              @extend .galery
+              cursor: not-allowed
+
+      .comment-add-button
+        position: absolute
+        top: 15px
+        left: -25px
+
+      .comment-add-box
+        display: flex
+        margin: 0 50px
+        justify-content: space-between
+        align-items: center
+
+        .comment-input
+          width: 400px
+          +media("<1650px")
+            width: 200px
+
+        .comment-button
+          height: 35px
+
+        .comment-button-disabled
+          cursor: not-allowed
+
+
+  .modal-box
+    position: absolute
+    width: 100%
+    height: 100vh
+    background-color: rgba(0, 0, 0, .8)
+    display: flex
+
+    .modal-box-img
+      margin: auto
+      position: relative
+      z-index:  999
+      box-shadow: 0 0 30px #000
+
+      .x
+        position: absolute
+        //color: rgba(255, 255, 255, .2)
+        top: 5px
+        font-size: 2em
+        color: #111
+        right: 5px
+        transition: color 1s
+        &:hover
+          cursor: pointer
+          color: rgba(255, 255, 255, .8)
+      .img
+        max-width: 800px
+        max-height: 600px
+
+    .modal-box-icon
+      position: absolute
+      top: 50%
+      color: #aaa
+      .icon
+        font-size: 5em
+        transition: color 1s
+        cursor: pointer
+        &:hover
+          color: #fff
+          cursor: pointer
+    .left
+      left: 10px
+
+    .right
+      right: 90px
+
+
+
+
+
