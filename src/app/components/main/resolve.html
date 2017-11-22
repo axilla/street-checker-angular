@@ -3,25 +3,35 @@
     <div class="title">Resolve issue</div>
   </div>
   <div class="resolve-tip">"In order to submit your suggestion, you must fill this form"</div>
-  <form [formGroup]="reportFormGroup" class="resolve-form" md-dialog-content>
-    <md-input-container style="width: 450px;">
-      <input mdInput placeholder="Title" formControlName="title">
-    </md-input-container>
-    <md-input-container  class="resolve-textarea">
-      <textarea mdInput   placeholder="Description" rows="5" maxlength="200" cols="27" #desc formControlName="description" ></textarea>
-      <md-hint align="start" ><span style="color: #FF5722;">Type description of the location</span> </md-hint>
-      <md-hint align="end">{{desc.value.length}} / 200</md-hint>
-    </md-input-container>
-  </form>
-  <div class="resolve-image-upload-box" >
-    <div class="no-photo-box"  *ngIf="imageUploadService.imagesObject['showImages'].length == 0">
-      Choose images for upload
-    </div>
-    <div class="image" *ngFor="let img of imageUploadService.imagesObject['showImages']">
-      <img [src]="img['url']"  class="icon" (click)="imageUploadService.onShowImage(pic.src)" #pic mdTooltip="Zoom image">
-      <span (click)="imageUploadService.onRemoveImg(pic.src, img.name)" mdTooltip="Remove image">&#10006;</span>
-    </div>
+
+
+  <div class="flex-box">
+    
+      <form [formGroup]="reportFormGroup" class="resolve-form" md-dialog-content>
+        <md-input-container style="width: 350px;">
+          <input mdInput placeholder="Title" formControlName="title">
+        </md-input-container>
+        <md-input-container  class="resolve-textarea">
+          <textarea mdInput   placeholder="Description" rows="5" maxlength="200" cols="27" #desc formControlName="description" ></textarea>
+          <md-hint align="start" ><span style="color: #FF5722;">Type description of the location</span> </md-hint>
+          <md-hint align="end">{{desc.value.length}} / 200</md-hint>
+        </md-input-container>
+      </form>
+    
+    
+      <div class="resolve-image-upload-box" >
+        <div class="no-photo-box"  *ngIf="imageUploadService.imagesObject['showImages'].length == 0">
+          Choose images for upload
+        </div>
+        <div class="image" *ngFor="let img of imageUploadService.imagesObject['showImages']">
+          <img [src]="img['url']"  class="icon" (click)="imageUploadService.onShowImage(pic.src)" #pic mdTooltip="Zoom image">
+          <span (click)="imageUploadService.onRemoveImg(pic.src, img.name)" mdTooltip="Remove image">&#10006;</span>
+        </div>
+      </div>
+    
   </div>
+
+
 </div>
 <div  class="resolve-buttons" >
   <button md-fab="" color="accent" class="btn back" md-dialog-close="false" mdTooltip="back"><md-icon>arrow_back</md-icon></button>

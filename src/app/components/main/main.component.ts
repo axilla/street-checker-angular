@@ -589,8 +589,10 @@ export class MainComponent implements OnInit {
   // Open resolve point modal on list of points
   public openResolveModal(id: string): void {
     const dialogRef = this.dialog.open(ResolveComponent, {
-      width: '570px',
-      height: '780px'
+      // width: '570px',
+      // height: '780px'
+      width: '800px',
+      height: '580px'
     });
     dialogRef.componentInstance.reportId = id;
     this.imageUploadService.imagesObject.showImages.length = 0;

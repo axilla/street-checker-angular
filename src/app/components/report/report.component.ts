@@ -516,8 +516,8 @@ export class ReportComponent implements OnInit {
   // Open resolve modal
   public openResolveDialog(id: number): void {
     const dialogRef = this.dialog.open(ResolveComponent,{
-      width: '570px',
-      height: '780px',
+      width: '800px',
+      height: '580px',
       data: null
     })
     dialogRef.componentInstance.reportId = id;

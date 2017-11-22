@@ -24,10 +24,10 @@
       <div class="display-type" *ngIf="user != undefined">
         <div class="text">Choose list display</div>
         <md-radio-group class="display-options" (change)="getMyResolves($event.value)">
-          <md-radio-button value="1" class="display-options-radio-button" [checked]="true">All locations
+          <md-radio-button value="1" class="display-options-radio-button" [checked]="true">All reports
           </md-radio-button>
           <md-radio-button value="2" class="display-options-radio-button">My resolves</md-radio-button>
-          <md-radio-button value="3" class="display-options-radio-button">My locations</md-radio-button>
+          <md-radio-button value="3" class="display-options-radio-button">My reports</md-radio-button>
         </md-radio-group>
       </div>
       <md-card class="list-display-item-box" *ngFor="let item of object_of_arrays.search">
@@ -105,10 +105,10 @@
         <div class="text">Choose map content</div>
         <md-radio-group class="display-options" style="padding-left: 5px" [disabled]="!flags.displayFlag"
                         (change)="onChangePoints($event.value)">
-          <md-radio-button value="1" class="display-options-radio-button" [checked]="true">All locations
+          <md-radio-button value="1" class="display-options-radio-button" [checked]="true">All reports
           </md-radio-button>
-          <md-radio-button value="2" class="display-options-radio-button">My locations</md-radio-button>
-          <md-radio-button value="3" class="display-options-radio-button">My resolved locations</md-radio-button>
+          <md-radio-button value="2" class="display-options-radio-button">My reports</md-radio-button>
+          <md-radio-button value="3" class="display-options-radio-button">My resolved reports</md-radio-button>
         </md-radio-group>
       </div>
     </div>
@@ -129,7 +129,7 @@
               {{ category.title }}
             </md-option>
           </md-select>
-          <div style="color: #bdbdbd">
+          <div style="color: #bdbdbd; display: flex; flex-direction: column">
             <span style="margin-left: 20px">Set level</span>
             <md-slider class="input-container" max="10" min="0" thumbLabel="true" formControlName="level"></md-slider>
           </div>

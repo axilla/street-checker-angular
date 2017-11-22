@@ -1,10 +1,16 @@
+@import "../../../../node_modules/include-media/dist/include-media"
+
+
 .resolve-box
-  width: 570px
+  // width: 570px
+  width: 800px
   height: auto
   overflow: hidden
   display: flex
   flex-direction: column
   justify-content: space-between
+  +media('<1500px')
+    // height: 450px
 
   .resolve-header
     display: flex
@@ -31,68 +37,72 @@
       size: 1.1em
     color: #bdbdbd
 
-  .resolve-form
-    width: 450px
-    margin: 35px auto
-
-    .resolve-textarea
-      width: 450px
-
-  .resolve-image-upload-box
-    margin: auto
+  .flex-box
     display: flex
-    width: 400px
-    height: 250px
-    flex-wrap: wrap
-    justify-content: flex-start
-    align-content: space-between
-    align-items: flex-start
+    
 
+    .resolve-form
+      width: 350px
+      margin: 35px auto
 
-    .no-photo-box
-      @extend .resolve-tip
+      .resolve-textarea
+        width: 350px
 
-    .image
+    .resolve-image-upload-box
+      margin: auto
       display: flex
-      flex-direction: column
+      width: 330px
+      height: 220px
+      flex-wrap: wrap
       justify-content: flex-start
       align-content: space-between
       align-items: flex-start
-      position: relative
 
 
+      .no-photo-box
+        @extend .resolve-tip
 
-      .icon
-        border-radius: 15px
+      .image
+        display: flex
+        flex-direction: column
+        justify-content: flex-start
+        align-content: space-between
+        align-items: flex-start
         position: relative
-        margin:
-          left: 10px
-          bottom: 10px
-        width: 110px
-        height: 100px
-        color: #e1e1e1!important
-        object-fit: cover
-        &:hover
-          cursor: zoom-in
 
-      span
-        position: absolute
-        color: #fff
-        top: 5px
-        right: 5px
-        font-size: .8em
-        z-index: 10
-        &:hover
-          cursor: pointer
+
+
+        .icon
+          border-radius: 15px
+          position: relative
+          margin:
+            left: 5px
+            bottom: 5px
+          width: 100px
+          height: 100px
+          color: #e1e1e1!important
+          object-fit: cover
+          &:hover
+            cursor: zoom-in
+
+        span
+          position: absolute
+          color: #fff
+          top: 5px
+          right: 5px
+          font-size: .8em
+          z-index: 10
+          &:hover
+            cursor: pointer
 
 .resolve-buttons
   display: flex
   margin:
     top: 60px
-    left: auto
-    right: auto
+    left: 25px
+    // right: auto
   height: 35px!important
-  width: 450px
+  width: 350px
   position: relative
   .btn
     margin-left: 15px
